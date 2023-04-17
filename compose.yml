@@ -1,0 +1,11 @@
+version: '3'
+services:
+  database:
+    platform: linux/arm64
+    image: "mysql:8.0.32"
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_DATABASE: app
+      TZ: Asia/Tokyo

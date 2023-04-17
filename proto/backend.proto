@@ -1,0 +1,83 @@
+syntax = 'proto3';
+
+option go_package = 'proto/pb';
+
+package backend;
+
+import 'google/protobuf/empty.proto';
+import 'google/protobuf/timestamp.proto';
+
+service BackendService {
+  rpc HelloWorld(google.protobuf.Empty) returns (HelloWorldResponse);
+  rpc SignUp(SignUpRequest) returns (SignUpResponse);
+  rpc Login(LoginRequest) returns (LoginResponse);
+  rpc CreateArticle(CreateArticleRequest) returns (CreateArticleResponse);
+  rpc GetArticles(google.protobuf.Empty) returns (GetArticlesResponse);
+  rpc GetArticle(GetArticleRequest) returns (GetArticleResponse);
+  rpc UpdateArticle(UpdateArticleRequest) returns (google.protobuf.Empty);
+  rpc DeleteArticle(DeleteArticleRequest) returns (google.protobuf.Empty);
+}
+
+message HelloWorldResponse {
+  string message = 1;
+}
+
+message SignUpRequest {
+  string email = 1;
+  string password = 2;
+}
+
+message SignUpResponse {
+  string access_token = 1;
+}
+
+message LoginRequest {
+  string email = 1;
+  string password = 2;
+}
+
+message LoginResponse {
+  string access_token = 1;
+}
+
+
+message CreateArticleRequest {
+  string title = 1;
+  optional string description = 2;
+  string text = 3;
+}
+
+message CreateArticleResponse {
+  int64 article_id = 1;
+}
+
+message GetArticlesResponse {
+  repeated Article articles = 1;
+}
+
+message GetArticleRequest {
+  int64 article_id = 1;
+}
+
+message GetArticleResponse {
+  Article article = 1;
+}
+
+message UpdateArticleRequest {
+  int64 article_id = 1;
+  string title = 2;
+  optional string description = 3;
+  string text = 4;
+}
+
+message DeleteArticleRequest {
+  int64 article_id = 1;
+}
+
+message Article {
+  int64 article_id = 1;
+  string title = 2;
+  optional string description = 3;
+  string text = 4;
+  google.protobuf.Timestamp created_at = 5;
+}
