@@ -57,7 +57,6 @@ func Start() {
 		log.Println("listening server with port:8080")
 		if err := s.Serve(ln); err != nil {
 			panic(err)
-			//logger.Error("server stopped", zap.Error(err))
 		}
 	}()
 

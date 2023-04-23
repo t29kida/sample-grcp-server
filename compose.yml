@@ -2,6 +2,7 @@ version: '3'
 services:
   database:
     platform: linux/arm64
+    container_name: database
     image: "mysql:8.0.32"
     ports:
       - "3306:3306"
@@ -9,3 +10,36 @@ services:
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
       MYSQL_DATABASE: app
       TZ: Asia/Tokyo
+    networks:
+      app:
+        ipv4_address: 10.0.10.1
+
+  backend:
+    container_name: backend
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: dev
+    tty: true
+    volumes:
+      - .:/app
+    ports:
+      - "8080:8080"
+    environment:
+      DB_USER: root
+      DB_PASSWORD: password
+      DB_NAME: app
+      DB_ADDR: 10.0.10.1:3306
+    networks:
+      app:
+        ipv4_address: 10.0.20.1
+    depends_on:
+      - database
+
+networks:
+  app:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 10.0.0.0/16
