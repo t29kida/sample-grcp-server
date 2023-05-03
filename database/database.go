@@ -2,6 +2,7 @@ package database
 
 import (
 	"database/sql"
+	"os"
 	"time"
 
 	cfg "sample-grpc-server/config"
@@ -28,11 +29,13 @@ func NewDatabase() (*bun.DB, error) {
 	}
 
 	db := bun.NewDB(sqlDB, mysqldialect.New())
-	db.AddQueryHook(
-		bundebug.NewQueryHook(
-			bundebug.WithEnabled(true),
-		),
-	)
+	if os.Getenv("ENV") == "development" {
+		db.AddQueryHook(
+			bundebug.NewQueryHook(
+				bundebug.WithEnabled(true),
+			),
+		)
+	}
 
 	return db, nil
 }

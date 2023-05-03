@@ -1,4 +1,4 @@
-package sample_grpc_server
+package main
 
 import (
 	"log"
@@ -24,7 +24,7 @@ func init() {
 	config.LoadConfig()
 }
 
-func Start() {
+func main() {
 	db, err := database.NewDatabase()
 	if err != nil {
 		log.Fatalf("failed to initialize database connection: %v", err)

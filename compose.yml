@@ -30,6 +30,7 @@ services:
       DB_PASSWORD: password
       DB_NAME: app
       DB_ADDR: 10.0.10.1:3306
+      ENV: development
     networks:
       app:
         ipv4_address: 10.0.20.1
